@@ -111,10 +111,10 @@
 				   		<a class="btn btn-dark navbar-link" title="Search" href="amuleweb-main-search.php">
 					   		<span class="glyphicon glyphicon-search"></span>
 					   	</a>
-				   		<!-- Servers -->
+				   		<!-- Servers
 				   		<a class="btn btn-dark navbar-link" title="Servers" href="amuleweb-main-servers.php">
 					   		<span class="glyphicon glyphicon-tasks"></span>
-					   	</a>
+					   	</a> -->
 				   		<!-- Kad -->
 				   		<a class="btn btn-dark navbar-link" title="Kademlia" href="amuleweb-main-kad.php">
 					   		<span class="glyphicon glyphicon-asterisk"></span>

@@ -11,6 +11,8 @@
 	?>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!-- Sets initial viewport load and disables zooming  -->
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1.5, user-scalable=yes">
 
 	<!-- Inclusion of bootstrap css -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -28,6 +30,8 @@
 		body {
 			padding-top: 60px;
 			background-color: #eee;
+			min-width:768px;
+			width: auto !important;
 		}
 		.logo-nav {
 			height: 40px;
@@ -118,6 +122,29 @@
 		#formed2link {
 			margin: 5px;
 		}
+		
+		@media (max-width: 767px) {
+		  .input-search-box {
+			max-width: 100%;
+			border-top-right-radius: 4px;
+			border-bottom-right-radius: 4px;
+		  }
+		}		
+		@media (min-width: 768px) and (max-width: 789px) {
+		  .input-search-box {
+			max-width: 450px;
+			border-top-right-radius: 0px;
+			border-bottom-right-radius: 0px;
+		  }
+		}
+		@media (min-width: 790px) {
+		  .input-search-box {
+			max-width: 480px;
+			border-top-right-radius: 0px;
+			border-bottom-right-radius: 0px;
+		  }
+		}
+
 	</style>
 
 	<script language="JavaScript" type="text/JavaScript">
@@ -158,10 +185,10 @@
 				   		<a class="btn btn-dark navbar-link" title="Search" href="amuleweb-main-search.php">
 					   		<span class="glyphicon glyphicon-search"></span>
 					   	</a>
-				   		<!-- Servers -->
+				   		<!-- Servers
 				   		<a class="btn btn-dark navbar-link" title="Servers" href="amuleweb-main-servers.php">
 					   		<span class="glyphicon glyphicon-tasks"></span>
-					   	</a>
+					   	</a> -->
 				   		<!-- Kad -->
 				   		<a class="btn btn-dark navbar-link" title="Kademlia" href="amuleweb-main-kad.php">
 					   		<span class="glyphicon glyphicon-asterisk"></span>
@@ -191,7 +218,6 @@
     	</div>
     </nav>
 
-
     <!-- Commands -->
     <form action="amuleweb-main-search.php" method="post" name="mainform">
     <input type="hidden" name="command">
@@ -199,23 +225,21 @@
   		<div class="panel-body container panel-center">
     		<div class="form-inline form-tasks">
     		<p><div class="btn-group">
-    			<a class="btn btn-info btn-group" href="amuleweb-main-search.php?search_sort=<?php echo($HTTP_GET_VARS["sort"]);?>" title="Refresh to see the results" style="height:34px;">
-    				<span class="glyphicon glyphicon-refresh"></span>
-    			</a>
-    			<input type="text" placeholder="Insert string to search..." name="searchval" class="form-control btn-group" style="border-radius:0px; z-index:1;" size="70">
+    			<input type="text" placeholder="Insert string to search..." name="searchval" class="form-control btn-group input-search-box" style="z-index:1;" size="70"/>
     			<select class="form-control btn-group" style="border-radius:0px; background-color:#eee;" name="searchtype">
     				<option>Local</option>
     				<option>Global</option>
     				<option selected>Kad</option>
-    			<input class="btn btn-info btn-group" name="Search" type="submit" value="Search" onClick="javascript:formCommandSubmit('search');" style="width:140px;">
+				</select>
+    			<input class="btn btn-info btn-group" name="Search" type="submit" value="Search" onClick="javascript:formCommandSubmit('search');" style="width:140px;"/>
     		</div></p><p>
     		<div class="btn-group">
     			<label class="form-control btn-group" style="border-top-right-radius:0px; border-bottom-right-radius:0px; background-color:#eee;">Availability</label>
-    			<input type="text" class="form-control btn-group" name="avail" style="border-top-left-radius:0px; border-bottom-left-radius:0px; z-index:1;" size="10">
+    			<input type="text" class="form-control btn-group" name="avail" style="border-top-left-radius:0px; border-bottom-left-radius:0px; z-index:1; width: 84px;" size="10" value="2"/>
     		</div>
     		<div class="btn-group">
     			<label class="form-control btn-group" style="border-top-right-radius:0px; border-bottom-right-radius:0px; background-color:#eee;">Min size</label>
-    			<input type="text" class="form-control btn-group" name="minsize" style="border-radius: 0px; z-index:1;" size="5">
+    			<input type="text" class="form-control btn-group" name="minsize" style="border-radius: 0px; z-index:1;" size="5" value="200"/>
     			<select class="form-control btn-group" style="border-radius:0px; background-color:#eee;" name="minsizeu">
     				<option>Byte</option>
 					<option>KByte</option>
@@ -223,7 +247,7 @@
 					<option>GByte</option>
     			</select>
     			<label class="form-control btn-group" style="border-radius:0px; background-color:#eee;">Max size</label>
-    			<input type="text" class="form-control btn-group" name="maxsize" style="border-radius: 0px; z-index:1;" size="5">
+    			<input type="text" class="form-control btn-group" name="maxsize" style="border-radius: 0px; z-index:1;" size="5" value="600"/>
     			<select class="form-control btn-group" style="border-top-left-radius: 0px; border-bottom-left-radius:0px; background-color:#eee;" name="maxsizeu">
     				<option>Byte</option>
 					<option>KByte</option>
@@ -236,7 +260,7 @@
   		</div>
 	</div>
 
-    <div class="panel panel-default panel-tasks">
+    <div class="panel panel-default panel-tasks hide">
   		<div class="panel-body container panel-center">
     		<div class="form-inline form-tasks">
     		<div class="btn-group">
@@ -263,13 +287,38 @@
 		
 		<!-- Table Download -->
 		<div class="panel panel-default" style="margin-bottom:60px;">
-		<div class="panel-heading panel-center"><h4>Search results</h4></div>
-			<table class="table">
+			<div class="panel-heading panel-center">
+				<div class="clearfix">
+					<h4 style="float:left;">
+						Search results:
+					</h4>
+					<a class="btn btn-info" href="amuleweb-main-search.php?search_sort=<?php echo($HTTP_GET_VARS['sort']);?>" title="Refresh to see the results" 
+						style="height:34px; margin-left: 30px; float:left;">
+						<span class="glyphicon glyphicon-refresh"></span>
+					</a>
+					<div class="form-inline form-tasks" style="margin-left: 30px; float:left;">
+						<div class="btn-group">
+							<label class="form-control btn-group" style="border-top-right-radius:0px; border-bottom-right-radius:0px; background-color:#eee;">For each element selected</label>
+							<input class="btn btn-success btn-group" name="Download" type="submit" value="Download" onClick="javascript:formCommandSubmit('download');" style="border-radius:0px;">
+							<label class="form-control btn-group" style="border-radius:0px; background-color:#eee;"> in category </label>
+							<select class="form-control btn-group" name="targetcat" style="border-top-left-radius:0px; border-bottom-left-radius:0px; background-color:#eee;">
+					  		<?php
+								$cats = amule_get_categories();
+								foreach($cats as $c) {
+									echo "<option>", $c, "</option>";
+								}
+							?>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<table class="table clearfix">
 				<thead>
 					<tr>
 						<th><a href="amuleweb-main-search.php?sort=name">File name</a></th>
 						<th><a href="amuleweb-main-search.php?sort=size">Size</a></th>
-						<th><a href="amuleweb-main-search.php?sort=srccount">Sources</a></th>
+						<th><a href="amuleweb-main-search.php?sort=sources">Sources</a></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -290,16 +339,16 @@
 
 					$sort_order;$sort_reverse;
 
-					function my_cmp($a, $b) {
+					function my_cmp($a, $b)
+					{
 						global $sort_order, $sort_reverse;
-						
+			
 						switch ( $sort_order) {
 							case "size": $result = $a->size > $b->size; break;
 							case "name": $result = $a->name > $b->name; break;
 							case "sources": 
 								$result = $a->sources > $b->sources;
-								var_dump($a->sources); 
-								break;
+							break;
 						}
 
 						if ( $sort_reverse ) {
@@ -377,6 +426,8 @@
 					if ( $sort_order != "" ) {
 						$_SESSION["search_sort"] = $sort_order;
 						usort(&$search, "my_cmp");
+						foreach ($search as $file)
+							var_dump($file->sources);
 					}
 
 					foreach ($search as $file) {

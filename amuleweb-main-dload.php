@@ -71,11 +71,15 @@
 			height: 28px;
 			border-top-right-radius: 0px;
 			border-bottom-right-radius: 0px;
+			padding-top: 0px;
+			padding-bottom: 0px;
 		}
 		#category {
 			width: 125px;
 			height: 28px;
 			border-radius: 0px;
+			padding-top: 0px;
+			padding-bottom: 0px;
 		}
 		.btn-filter {
 			border-top-left-radius: 0px;
@@ -167,10 +171,10 @@
 				   		<a class="btn btn-dark navbar-link" title="Search" href="amuleweb-main-search.php">
 					   		<span class="glyphicon glyphicon-search"></span>
 					   	</a>
-				   		<!-- Servers -->
+				   		<!-- Servers
 				   		<a class="btn btn-dark navbar-link" title="Servers" href="amuleweb-main-servers.php">
 					   		<span class="glyphicon glyphicon-tasks"></span>
-					   	</a>
+					   	</a> -->
 				   		<!-- Kad -->
 				   		<a class="btn btn-dark navbar-link" title="Kademlia" href="amuleweb-main-kad.php">
 					   		<span class="glyphicon glyphicon-asterisk"></span>
