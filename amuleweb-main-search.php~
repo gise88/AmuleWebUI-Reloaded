@@ -297,8 +297,7 @@
 							case "size": $result = $a->size > $b->size; break;
 							case "name": $result = $a->name > $b->name; break;
 							case "sources": 
-								$result = $a->sources > $b->sources;
-								var_dump($a->sources); 
+								$result = $a->sources > $b->sources; 
 								break;
 						}
 
