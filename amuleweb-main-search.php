@@ -11,8 +11,6 @@
 	?>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<!-- Sets initial viewport load and disables zooming  -->
-	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1.5, user-scalable=yes">
 
 	<!-- Inclusion of bootstrap css -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -30,8 +28,6 @@
 		body {
 			padding-top: 60px;
 			background-color: #eee;
-			min-width:768px;
-			width: auto !important;
 		}
 		.logo-nav {
 			height: 40px;
@@ -118,11 +114,13 @@
 		#selectcat {
 			border-radius: 0px;
 			width: 100px;
+			padding-top: 0;
+			padding-bottom: 0;
 		}
 		#formed2link {
 			margin: 5px;
 		}
-		
+
 		@media (max-width: 767px) {
 		  .input-search-box {
 			max-width: 100%;
@@ -132,18 +130,19 @@
 		}		
 		@media (min-width: 768px) and (max-width: 789px) {
 		  .input-search-box {
-			max-width: 450px;
+			max-width: 460px;
 			border-top-right-radius: 0px;
 			border-bottom-right-radius: 0px;
 		  }
 		}
 		@media (min-width: 790px) {
 		  .input-search-box {
-			max-width: 480px;
+			max-width: 460px;
 			border-top-right-radius: 0px;
 			border-bottom-right-radius: 0px;
 		  }
 		}
+
 
 	</style>
 
@@ -156,9 +155,11 @@
 						echo "return;";
 				}
 			?>
-			var frm=document.forms.mainform
-			frm.command.value=command
-			frm.submit()
+			
+			var frm=document.forms.mainform;
+			frm.command.value=command;
+			console.log(frm);
+			frm.submit();
 		}
 	</script>
 
@@ -225,14 +226,20 @@
   		<div class="panel-body container panel-center">
     		<div class="form-inline form-tasks">
     		<p><div class="btn-group">
-    			<input type="text" placeholder="Insert string to search..." name="searchval" class="form-control btn-group input-search-box" style="z-index:1;" size="70"/>
-    			<select class="form-control btn-group" style="border-radius:0px; background-color:#eee;" name="searchtype">
+    			<input type="text" placeholder="Insert string to search..." name="searchval" class="form-control btn-group input-search-box" style="z-index:1;" size="70"
+						value="<?php if ($HTTP_GET_VARS['searchval'] != '') echo($HTTP_GET_VARS['searchval']); else echo($_SESSION['searchval']); ?>"/>
+    			<select class="form-control btn-group" style="border-radius:0px; background-color:#eee; width:90px;" name="searchtype">
     				<option>Local</option>
     				<option>Global</option>
     				<option selected>Kad</option>
 				</select>
     			<input class="btn btn-info btn-group" name="Search" type="submit" value="Search" onClick="javascript:formCommandSubmit('search');" style="width:140px;"/>
-    		</div></p><p>
+    		</div>
+			</p><p>
+			<!--
+			<a class="btn btn-default btn-filter" href="javascript:formCommandSubmit('filter');" title="Filter"><span class="glyphicon glyphicon-filter"></span></a>
+			-->
+			</p><p>
     		<div class="btn-group">
     			<label class="form-control btn-group" style="border-top-right-radius:0px; border-bottom-right-radius:0px; background-color:#eee;">Availability</label>
     			<input type="text" class="form-control btn-group" name="avail" style="border-top-left-radius:0px; border-bottom-left-radius:0px; z-index:1; width: 84px;" size="10" value="2"/>
@@ -339,16 +346,13 @@
 
 					$sort_order;$sort_reverse;
 
-					function my_cmp($a, $b)
-					{
+					function my_cmp($a, $b) {
 						global $sort_order, $sort_reverse;
-			
+						
 						switch ( $sort_order) {
 							case "size": $result = $a->size > $b->size; break;
 							case "name": $result = $a->name > $b->name; break;
-							case "sources": 
-								$result = $a->sources > $b->sources;
-							break;
+							case "sources": $result = $a->sources > $b->sources; break;
 						}
 
 						if ( $sort_reverse ) {
@@ -380,6 +384,8 @@
 
 					if ($_SESSION["guest_login"] == 0) {
 						if ( $HTTP_GET_VARS["command"] == "search") {
+							$_SESSION["searchval"] = $HTTP_GET_VARS["searchval"];
+						
 							$search_type = -1;
 							switch($HTTP_GET_VARS["searchtype"]) {
 								case "Local": $search_type = 0; break;
@@ -407,7 +413,7 @@
 							}
 						} else {
 						}
-					}		
+					}
 					$search = amule_load_vars("searchresult");
 
 					$sort_order = $HTTP_GET_VARS["sort"];
@@ -426,8 +432,6 @@
 					if ( $sort_order != "" ) {
 						$_SESSION["search_sort"] = $sort_order;
 						usort(&$search, "my_cmp");
-						foreach ($search as $file)
-							var_dump($file->sources);
 					}
 
 					foreach ($search as $file) {

@@ -99,6 +99,8 @@
     #selectcat {
       border-radius: 0px;
       width: 100px;
+	  padding-top: 0;
+	  padding-bottom: 0;
     }
     #formed2link {
       margin: 5px;
