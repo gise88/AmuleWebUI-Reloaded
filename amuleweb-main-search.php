@@ -21,6 +21,17 @@
 	<script type="text/Javascript">
 		$(function () { $("[data-toggle='tooltip']").tooltip(); });
 		$(function () { $("[data-toggle='popover']").popover(); });
+
+		$(document).ready(function() {
+			$('#searchinput').keyup(function() {
+				$('#searchclear').toggle(Boolean($(this).val()));
+			});
+			$('#searchclear').toggle(Boolean($("#searchinput").val()));
+			$('#searchclear').click(function() {
+				$('#searchinput').val('').focus();
+				$(this).hide();
+			});
+		});
 	</script>
 
 	<!-- Style for navigation bar -->
@@ -120,27 +131,46 @@
 		#formed2link {
 			margin: 5px;
 		}
+		
+		
 
 		@media (max-width: 767px) {
-		  .input-search-box {
-			max-width: 100%;
-			border-top-right-radius: 4px;
-			border-bottom-right-radius: 4px;
-		  }
-		}		
-		@media (min-width: 768px) and (max-width: 789px) {
-		  .input-search-box {
-			max-width: 460px;
-			border-top-right-radius: 0px;
-			border-bottom-right-radius: 0px;
-		  }
-		}
-		@media (min-width: 790px) {
-		  .input-search-box {
-			max-width: 460px;
-			border-top-right-radius: 0px;
-			border-bottom-right-radius: 0px;
-		  }
+			.input-search-box {
+				max-width: 100%;
+				border-top-right-radius: 4px;
+				border-bottom-right-radius: 4px;
+			}
+			#searchclear {
+				position: absolute;
+				right: 10px;
+				top: 0px;
+				bottom: 34px;
+				height: 17px;
+				margin: auto;
+				font-size: 20px;
+				cursor: pointer;
+				color: #CCC;
+				z-index: 1;
+			}
+		}	
+		@media (min-width: 768px) {
+			.input-search-box {
+				max-width: 446px;
+				border-top-right-radius: 0px;
+				border-bottom-right-radius: 0px;
+			}
+			#searchclear {
+				position: absolute;
+				right: 238px;
+				top: 0px;
+				bottom: 0px;
+				height: 17px;
+				margin: auto;
+				font-size: 20px;
+				cursor: pointer;
+				color: #CCC;
+				z-index: 1;
+			}
 		}
 
 
@@ -226,9 +256,11 @@
   		<div class="panel-body container panel-center">
     		<div class="form-inline form-tasks">
     		<p><div class="btn-group">
-    			<input type="text" placeholder="Insert string to search..." name="searchval" class="form-control btn-group input-search-box" style="z-index:1;" size="70"
-						value="<?php if ($HTTP_GET_VARS['searchval'] != '') echo($HTTP_GET_VARS['searchval']); else echo($_SESSION['searchval']); ?>"/>
-    			<select class="form-control btn-group" style="border-radius:0px; background-color:#eee; width:90px;" name="searchtype">
+    			<input type="text" id="searchinput" placeholder="Insert string to search..." name="searchval" class="form-control btn-group input-search-box"
+						style="z-index:1;" size="70" value="<?php if ($HTTP_GET_VARS['searchval'] != '') echo($HTTP_GET_VARS['searchval']); else echo($_SESSION['searchval']); ?>"/>
+				<span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
+    			
+				<select class="form-control btn-group" style="border-radius:0px; background-color:#eee; width:90px;" name="searchtype">
     				<option>Local</option>
     				<option>Global</option>
     				<option selected>Kad</option>
